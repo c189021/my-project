@@ -1,5 +1,5 @@
-import { createClient } from '@/lib/supabase/server';
-import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from "@/lib/supabase/server";
+import { NextRequest, NextResponse } from "next/server";
 
 /**
  * GET /api/profiles
@@ -9,20 +9,29 @@ export async function GET(request: NextRequest) {
   try {
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
-    const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : 10;
-    const offset = searchParams.get('offset') ? parseInt(searchParams.get('offset')!) : 0;
+    const limit = searchParams.get("limit")
+      ? parseInt(searchParams.get("limit")!)
+      : 10;
+    const offset = searchParams.get("offset")
+      ? parseInt(searchParams.get("offset")!)
+      : 0;
 
-    const { data: profiles, error, count } = await supabase
-      .from('profiles')
-      .select('*', { count: 'exact' })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const {
+      data: profiles,
+      error,
+      count,
+    } = await (supabase as any)
+      .from("profiles")
+      .select("*", { count: "exact" })
       .range(offset, offset + limit - 1)
-      .order('created_at', { ascending: false });
+      .order("created_at", { ascending: false });
 
     if (error) {
-      console.error('Error fetching profiles:', error);
+      console.error("Error fetching profiles:", error);
       return NextResponse.json(
         { success: false, error: error.message },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -36,10 +45,10 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('Unexpected error:', error);
+    console.error("Unexpected error:", error);
     return NextResponse.json(
-      { success: false, error: 'Internal server error' },
-      { status: 500 }
+      { success: false, error: "Internal server error" },
+      { status: 500 },
     );
   }
 }

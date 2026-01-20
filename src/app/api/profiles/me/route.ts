@@ -1,6 +1,6 @@
-import { createClient } from '@/lib/supabase/server';
-import { NextRequest, NextResponse } from 'next/server';
-import type { ProfileUpdateInput } from '@/types';
+import { createClient } from "@/lib/supabase/server";
+import { NextRequest, NextResponse } from "next/server";
+import type { ProfileUpdateInput } from "@/types";
 
 /**
  * GET /api/profiles/me
@@ -18,23 +18,24 @@ export async function GET() {
 
     if (authError || !user) {
       return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
+        { success: false, error: "Unauthorized" },
+        { status: 401 },
       );
     }
 
     // 프로필 조회
-    const { data: profile, error } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', user.id)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: profile, error } = await (supabase as any)
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
       .single();
 
     if (error) {
-      console.error('Error fetching profile:', error);
+      console.error("Error fetching profile:", error);
       return NextResponse.json(
         { success: false, error: error.message },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -43,10 +44,10 @@ export async function GET() {
       data: profile,
     });
   } catch (error) {
-    console.error('Unexpected error:', error);
+    console.error("Unexpected error:", error);
     return NextResponse.json(
-      { success: false, error: 'Internal server error' },
-      { status: 500 }
+      { success: false, error: "Internal server error" },
+      { status: 500 },
     );
   }
 }
@@ -67,8 +68,8 @@ export async function PATCH(request: NextRequest) {
 
     if (authError || !user) {
       return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
+        { success: false, error: "Unauthorized" },
+        { status: 401 },
       );
     }
 
@@ -77,11 +78,11 @@ export async function PATCH(request: NextRequest) {
 
     // 허용된 필드만 업데이트
     const allowedFields: (keyof ProfileUpdateInput)[] = [
-      'username',
-      'full_name',
-      'avatar_url',
-      'bio',
-      'website',
+      "username",
+      "full_name",
+      "avatar_url",
+      "bio",
+      "website",
     ];
 
     const updateData: Partial<ProfileUpdateInput> = {};
@@ -93,33 +94,34 @@ export async function PATCH(request: NextRequest) {
 
     if (Object.keys(updateData).length === 0) {
       return NextResponse.json(
-        { success: false, error: 'No valid fields to update' },
-        { status: 400 }
+        { success: false, error: "No valid fields to update" },
+        { status: 400 },
       );
     }
 
     // 프로필 업데이트
-    const { data: profile, error } = await supabase
-      .from('profiles')
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: profile, error } = await (supabase as any)
+      .from("profiles")
       .update(updateData)
-      .eq('id', user.id)
+      .eq("id", user.id)
       .select()
       .single();
 
     if (error) {
-      console.error('Error updating profile:', error);
-      
+      console.error("Error updating profile:", error);
+
       // username 중복 에러 처리
-      if (error.code === '23505' && error.message.includes('username')) {
+      if (error.code === "23505" && error.message.includes("username")) {
         return NextResponse.json(
-          { success: false, error: 'Username already taken' },
-          { status: 409 }
+          { success: false, error: "Username already taken" },
+          { status: 409 },
         );
       }
 
       return NextResponse.json(
         { success: false, error: error.message },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -128,10 +130,10 @@ export async function PATCH(request: NextRequest) {
       data: profile,
     });
   } catch (error) {
-    console.error('Unexpected error:', error);
+    console.error("Unexpected error:", error);
     return NextResponse.json(
-      { success: false, error: 'Internal server error' },
-      { status: 500 }
+      { success: false, error: "Internal server error" },
+      { status: 500 },
     );
   }
 }
@@ -152,8 +154,8 @@ export async function DELETE() {
 
     if (authError || !user) {
       return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
+        { success: false, error: "Unauthorized" },
+        { status: 401 },
       );
     }
 
@@ -161,22 +163,22 @@ export async function DELETE() {
     const { error } = await supabase.auth.admin.deleteUser(user.id);
 
     if (error) {
-      console.error('Error deleting user:', error);
+      console.error("Error deleting user:", error);
       return NextResponse.json(
         { success: false, error: error.message },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
     return NextResponse.json({
       success: true,
-      message: 'User deleted successfully',
+      message: "User deleted successfully",
     });
   } catch (error) {
-    console.error('Unexpected error:', error);
+    console.error("Unexpected error:", error);
     return NextResponse.json(
-      { success: false, error: 'Internal server error' },
-      { status: 500 }
+      { success: false, error: "Internal server error" },
+      { status: 500 },
     );
   }
 }
