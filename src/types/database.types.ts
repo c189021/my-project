@@ -27,62 +27,69 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      // 예시: users 테이블
-      // users: {
-      //   Row: {
-      //     id: string;
-      //     email: string;
-      //     created_at: string;
-      //     updated_at: string;
-      //   };
-      //   Insert: {
-      //     id?: string;
-      //     email: string;
-      //     created_at?: string;
-      //     updated_at?: string;
-      //   };
-      //   Update: {
-      //     id?: string;
-      //     email?: string;
-      //     created_at?: string;
-      //     updated_at?: string;
-      //   };
-      // };
-
-      // 예시: projects 테이블
-      // projects: {
-      //   Row: {
-      //     id: string;
-      //     user_id: string;
-      //     title: string;
-      //     description: string | null;
-      //     image_url: string | null;
-      //     created_at: string;
-      //   };
-      //   Insert: {
-      //     id?: string;
-      //     user_id: string;
-      //     title: string;
-      //     description?: string | null;
-      //     image_url?: string | null;
-      //     created_at?: string;
-      //   };
-      //   Update: {
-      //     id?: string;
-      //     user_id?: string;
-      //     title?: string;
-      //     description?: string | null;
-      //     image_url?: string | null;
-      //     created_at?: string;
-      //   };
-      // };
-
-      // Supabase에 테이블을 생성한 후 npm run gen:types를 실행하면
-      // 이 부분이 자동으로 채워집니다.
-      [key: string]: {
-        Row: Record<string, unknown>;
-        Insert: Record<string, unknown>;
-        Update: Record<string, unknown>;
+      posts: {
+        Row: {
+          id: string;
+          title: string;
+          content: string;
+          category: string;
+          author_id: string | null;
+          author_name: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          title: string;
+          content: string;
+          category?: string;
+          author_id?: string | null;
+          author_name?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          title?: string;
+          content?: string;
+          category?: string;
+          author_id?: string | null;
+          author_name?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      profiles: {
+        Row: {
+          id: string;
+          username: string | null;
+          full_name: string | null;
+          avatar_url: string | null;
+          bio: string | null;
+          website: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id: string;
+          username?: string | null;
+          full_name?: string | null;
+          avatar_url?: string | null;
+          bio?: string | null;
+          website?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          username?: string | null;
+          full_name?: string | null;
+          avatar_url?: string | null;
+          bio?: string | null;
+          website?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
       };
     };
     Views: {
