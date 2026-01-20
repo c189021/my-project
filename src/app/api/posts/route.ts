@@ -38,7 +38,8 @@ export async function GET(request: NextRequest) {
     const offset = (page - 1) * limit;
 
     // 쿼리 빌드
-    let query = supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let query = (supabase as any)
       .from("posts")
       .select("*", { count: "exact" })
       .order("created_at", { ascending: false })
@@ -248,7 +249,8 @@ export async function DELETE(request: NextRequest) {
     }
 
     // 3. 게시글 존재 및 권한 확인
-    const { data: post, error: fetchError } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: post, error: fetchError } = await (supabase as any)
       .from("posts")
       .select("author_id")
       .eq("id", postId)
@@ -265,7 +267,7 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    if (post.author_id !== user.id) {
+    if ((post as { author_id: string }).author_id !== user.id) {
       return jsonResponse(
         {
           success: false,
@@ -277,7 +279,11 @@ export async function DELETE(request: NextRequest) {
     }
 
     // 4. 삭제 실행
-    const { error } = await supabase.from("posts").delete().eq("id", postId);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { error } = await (supabase as any)
+      .from("posts")
+      .delete()
+      .eq("id", postId);
 
     if (error) {
       logError("DELETE /api/posts", error);
