@@ -16,7 +16,6 @@ export async function GET(request: NextRequest) {
       ? parseInt(searchParams.get("offset")!)
       : 0;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const {
       data: profiles,
       error,
