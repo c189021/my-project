@@ -164,13 +164,15 @@ export async function POST(request: NextRequest) {
     // 4. 게시글 저장
     const { data, error } = await supabase
       .from("posts")
-      .insert({
-        title: title.trim(),
-        content: content.trim(),
-        category: category || "general",
-        author_id: user.id,
-        author_name: user.email?.split("@")[0] || "익명",
-      })
+      .insert([
+        {
+          title: title.trim(),
+          content: content.trim(),
+          category: category || "general",
+          author_id: user.id,
+          author_name: user.email?.split("@")[0] || "익명",
+        },
+      ])
       .select()
       .single();
 
