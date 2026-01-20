@@ -31,13 +31,13 @@ export default function Header() {
   useEffect(() => {
     let isMounted = true;
 
-    // Supabase URL이 설정되지 않은 경우 스킵
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL?.startsWith("http")) {
-      if (isMounted) setIsLoading(false);
-      return;
-    }
-
     const initAuth = async () => {
+      // Supabase URL이 설정되지 않은 경우 스킵
+      if (!process.env.NEXT_PUBLIC_SUPABASE_URL?.startsWith("http")) {
+        if (isMounted) setIsLoading(false);
+        return;
+      }
+
       try {
         const supabase = createClient();
 
