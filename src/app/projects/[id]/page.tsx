@@ -6,7 +6,6 @@ import {
   ArrowLeft,
   ExternalLink,
   Github,
-  Calendar,
   FolderKanban,
   ChevronRight,
 } from "lucide-react";

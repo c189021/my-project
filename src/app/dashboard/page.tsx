@@ -177,7 +177,7 @@ export default async function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="grid gap-4 sm:grid-cols-3">
-              <a
+              <Link
                 href="/qna"
                 className="flex items-center gap-3 p-4 rounded-lg border border-slate-200 hover:border-[#1e3a5f] hover:bg-slate-50 transition-colors"
               >
@@ -186,8 +186,8 @@ export default async function DashboardPage() {
                   <p className="font-medium text-slate-900">Q&A 게시판</p>
                   <p className="text-sm text-slate-500">질문하고 답변받기</p>
                 </div>
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/projects"
                 className="flex items-center gap-3 p-4 rounded-lg border border-slate-200 hover:border-[#1e3a5f] hover:bg-slate-50 transition-colors"
               >
@@ -196,8 +196,8 @@ export default async function DashboardPage() {
                   <p className="font-medium text-slate-900">프로젝트</p>
                   <p className="text-sm text-slate-500">작업물 살펴보기</p>
                 </div>
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/contact"
                 className="flex items-center gap-3 p-4 rounded-lg border border-slate-200 hover:border-[#1e3a5f] hover:bg-slate-50 transition-colors"
               >
@@ -206,7 +206,7 @@ export default async function DashboardPage() {
                   <p className="font-medium text-slate-900">문의하기</p>
                   <p className="text-sm text-slate-500">연락처 및 문의</p>
                 </div>
-              </a>
+              </Link>
             </div>
           </CardContent>
         </Card>

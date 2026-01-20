@@ -6,7 +6,6 @@ import {
   GraduationCap,
   Award,
   Calendar,
-  MapPin,
   ChevronRight,
   Download,
 } from "lucide-react";
@@ -49,7 +48,7 @@ export default function ExperiencePage() {
             <div className="absolute left-0 md:left-8 top-0 bottom-0 w-0.5 bg-slate-200" />
 
             <div className="space-y-8">
-              {dummyExperiences.map((exp, index) => (
+              {dummyExperiences.map((exp) => (
                 <div key={exp.id} className="relative pl-8 md:pl-20">
                   {/* 타임라인 도트 */}
                   <div className="absolute left-0 md:left-8 top-0 w-4 h-4 -translate-x-1/2 rounded-full bg-[#1e3a5f] border-4 border-white shadow" />
