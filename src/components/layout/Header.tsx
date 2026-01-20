@@ -29,33 +29,48 @@ export default function Header() {
 
   // 유저 상태 확인
   useEffect(() => {
+    let isMounted = true;
+
     // Supabase URL이 설정되지 않은 경우 스킵
     if (!process.env.NEXT_PUBLIC_SUPABASE_URL?.startsWith("http")) {
-      setIsLoading(false);
+      if (isMounted) setIsLoading(false);
       return;
     }
 
-    try {
-      const supabase = createClient();
+    const initAuth = async () => {
+      try {
+        const supabase = createClient();
 
-      // 현재 유저 확인
-      supabase.auth.getUser().then(({ data: { user } }) => {
-        setUser(user);
-        setIsLoading(false);
-      });
+        // 현재 유저 확인
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (isMounted) {
+          setUser(user);
+          setIsLoading(false);
+        }
 
-      // 인증 상태 변경 리스너
-      const {
-        data: { subscription },
-      } = supabase.auth.onAuthStateChange((_event, session) => {
-        setUser(session?.user ?? null);
-      });
+        // 인증 상태 변경 리스너
+        const {
+          data: { subscription },
+        } = supabase.auth.onAuthStateChange((_event, session) => {
+          if (isMounted) {
+            setUser(session?.user ?? null);
+          }
+        });
 
-      return () => subscription.unsubscribe();
-    } catch (error) {
-      console.error("Supabase 초기화 오류:", error);
-      setIsLoading(false);
-    }
+        return () => subscription.unsubscribe();
+      } catch (error) {
+        console.error("Supabase 초기화 오류:", error);
+        if (isMounted) setIsLoading(false);
+      }
+    };
+
+    initAuth();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   // 로그아웃 처리
