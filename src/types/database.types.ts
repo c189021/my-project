@@ -24,7 +24,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[];
 
-export interface Database {
+export type Database = {
   public: {
     Tables: {
       posts: {
@@ -58,6 +58,7 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
+        Relationships: [];
       };
       profiles: {
         Row: {
@@ -90,6 +91,7 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
+        Relationships: [];
       };
     };
     Views: {
@@ -101,8 +103,11 @@ export interface Database {
     Enums: {
       [_ in never]: never;
     };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
   };
-}
+};
 
 // 타입 헬퍼
 export type Tables<T extends keyof Database["public"]["Tables"]> =

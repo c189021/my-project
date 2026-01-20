@@ -9,6 +9,20 @@ interface PostDetailPageProps {
   params: Promise<{ id: string }>;
 }
 
+interface PostWithProfile {
+  id: number;
+  title: string;
+  content: string;
+  category: string | null;
+  created_at: string;
+  updated_at: string;
+  user_id: string;
+  profiles: {
+    username: string;
+    avatar_url: string | null;
+  } | null;
+}
+
 export default async function PostDetailPage({ params }: PostDetailPageProps) {
   const { id } = await params;
   const supabase = await createClient();
@@ -31,7 +45,7 @@ export default async function PostDetailPage({ params }: PostDetailPageProps) {
     `,
     )
     .eq("id", id)
-    .single();
+    .single<PostWithProfile>();
 
   if (error || !post) {
     notFound();
