@@ -1,0 +1,25 @@
+{
+  "name": "My Project",
+  "description": "Q&A 게시판 기능, 메일컨택 기능을 갖춘 포트폴리오 사이트",
+  "author": "Your Name",
+  "email": "your.email@example.com",
+  "url": "https://your-domain.com",
+  "social": {
+    "github": "https://github.com/yourusername",
+    "linkedin": "https://linkedin.com/in/yourusername",
+    "twitter": "https://twitter.com/yourusername"
+  },
+  "theme": {
+    "mainColor": "#1e3a5f",
+    "colorName": "남색 (Navy Blue)"
+  },
+  "navigation": [
+    { "name": "홈", "href": "/" },
+    { "name": "소개", "href": "/about" },
+    { "name": "프로젝트", "href": "/projects" },
+    { "name": "이력", "href": "/experience" },
+    { "name": "Q&A", "href": "/qna" },
+    { "name": "게시판", "href": "/posts" },
+    { "name": "연락처", "href": "/contact" }
+  ]
+}
